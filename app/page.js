@@ -1,16 +1,37 @@
+import { getUsers } from "@/actions/user";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Item, ItemContent } from "@/components/ui/item";
 
-import { unstable_noStore as noStore } from 'next/cache';
-import CurrentTimeFromAPI from './components/CurrentTimeFromAPI';
 
-export default function Home() {
-    noStore();
-    const timeOnServer = new Date().toLocaleTimeString('en-US');
+export default async function Home() {
+
+    const { data } = await getUsers()
+
+    console.log(data);
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div>
-                This is a Next.js application hosted on Azure Static Web Apps with hybrid rendering. The time on the server is <strong>{timeOnServer}</strong>.
+        <main className="p-4">
+            <div className='flex flex-col gap-4 pb-4'>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Aktív felhasználók listája</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-4">
+                        {data.length === 0 ? (
+                            <p className="text-center text-muted-foreground py-8">Nincsenek felhasználók</p>
+                        ) : (
+                            data.map((user) => (
+                                <Item key={user.id} variant="muted" className="flex items-start gap-12">
+                                    <ItemContent className="gap-6">
+                                        {user.name}
+                                    </ItemContent>
+                                </Item>
+                                // <UserListItem key={user.id} user={user} currentUserId={currentUserId} />
+                            ))
+                        )}
+                    </CardContent>
+                </Card>
             </div>
-            <CurrentTimeFromAPI />
         </main>
     );
 }
