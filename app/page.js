@@ -1,13 +1,15 @@
-import { getUsers } from "@/actions/user";
+// import { getUsers } from "@/actions/user";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Item, ItemContent } from "@/components/ui/item";
+// import { Item, ItemContent } from "@/components/ui/item";
+import UserList from "@/components/UserList";
+import { Suspense } from "react";
 
 
-export default async function Home() {
+export default function Home() {
 
-    const { data } = await getUsers()
+    // const { data } = await getUsers()
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <main className="p-4">
@@ -17,7 +19,10 @@ export default async function Home() {
                         <CardTitle>Aktív felhasználók listája</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4">
-                        {data.length === 0 ? (
+                        <Suspense fallback={<p>Loading users...</p>}>
+                            <UserList />
+                        </Suspense>
+                        {/* {data.length === 0 ? (
                             <p className="text-center text-muted-foreground py-8">Nincsenek felhasználók</p>
                         ) : (
                             data.map((user) => (
@@ -28,7 +33,7 @@ export default async function Home() {
                                 </Item>
                                 // <UserListItem key={user.id} user={user} currentUserId={currentUserId} />
                             ))
-                        )}
+                        )} */}
                     </CardContent>
                 </Card>
             </div>

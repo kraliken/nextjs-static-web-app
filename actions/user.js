@@ -46,8 +46,8 @@ function toUserDtos(users) {
 }
 export async function getUsers() {
 
-    const delay = Math.random() * 5000 + 5000; // 5-10 sec
-    await new Promise(resolve => setTimeout(resolve, delay));
+    // const delay = Math.random() * 5000 + 5000; // 5-10 sec
+    // await new Promise(resolve => setTimeout(resolve, delay));
 
     try {
         await connectToDatabase()
